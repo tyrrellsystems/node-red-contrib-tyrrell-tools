@@ -21,23 +21,62 @@ module.exports = function(RED) {
   	RED.nodes.createNode(this, n);
   	this.increment = parseInt(n.increment);
   	this.name = n.name;
+    this.presetValue = parseInt(n.preset);
+    this.presetTopic = n.presetTopic;
+    this.resetTopic = n.resetTopic;
   	this.topic = n.topic;
   	this.value = 0;
+
+    this.preset = false;
 
   	var node = this;
 
   	this.on('input', function(msg) {
-  		if (typeof msg.payload === 'boolean' || typeof msg.payload === 'number') {
-  			if (msg.payload) {
-  				node.value += node.increment;
-  			} else {
-  				node.value -= node.increment;
-  			}
-  			node.send({
-  				topic:node.topic,
-  				payload: node.value
-  			})
-  		}
+      if (msg.hasOwnProperty('topic') && msg.topic === node.resetTopic) {
+        node.value = 0;
+        node.send({
+          topic:node.topic,
+          payload: 0
+        });
+      } else if (msg.hasOwnProperty('topic') && msg.topic === node.presetTopic) {
+        if (msg.hasOwnProperty('payload') && (typeof msg.payload === 'boolean' || typeof msg.payload === 'number')) {
+          if (msg.payload) {
+            node.preset = true;
+          } else {
+            node.preset = false;
+          }
+          if (node.preset) {
+            node.send({
+              topic:node.topic,
+              payload: node.presetValue
+            });
+          } else {
+            node.send({
+              topic:node.topic,
+              payload: node.value
+            });
+          }
+        }
+      } else if (node.preset) {
+        node.send({
+          topic:node.topic,
+          payload: node.presetValue
+        });
+      } else {
+        //console.log(msg.payload);
+    		if (msg.hasOwnProperty('payload') && (typeof msg.payload === 'boolean' || typeof msg.payload === 'number')) {
+    			if (msg.payload) {
+    				node.value += node.increment;
+    			} else {
+    				node.value -= node.increment;
+    			}
+          //console.log(node.value);
+    			node.send({
+    				topic:node.topic,
+    				payload: node.value
+    			});
+    		}
+      }
   	});
   }
 
