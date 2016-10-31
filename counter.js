@@ -35,7 +35,7 @@ module.exports = function(RED) {
       if (msg.hasOwnProperty('topic') && msg.topic === node.resetTopic) {
         node.value = 0;
         node.send({
-          topic:node.topic,
+          topic:msg.topic,
           payload: 0
         });
       } else if (msg.hasOwnProperty('topic') && msg.topic === node.presetTopic) {
@@ -47,19 +47,19 @@ module.exports = function(RED) {
           }
           if (node.preset) {
             node.send({
-              topic:node.topic,
+              topic:msg.topic,
               payload: node.presetValue
             });
           } else {
             node.send({
-              topic:node.topic,
+              topic:msg.topic,
               payload: node.value
             });
           }
         }
       } else if (node.preset) {
         node.send({
-          topic:node.topic,
+          topic:msg.topic,
           payload: node.presetValue
         });
       } else {
@@ -72,7 +72,7 @@ module.exports = function(RED) {
     			}
           //console.log(node.value);
     			node.send({
-    				topic:node.topic,
+    				topic:msg.topic,
     				payload: node.value
     			});
     		}

@@ -28,17 +28,19 @@
     <input type="text" id="node-input-resetTopic" >
   </div>
   <div class="form-row">
-    <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-    <input type="text" id="node-input-topic" >
-  </div>
-  <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
     <input type="text" id="node-input-name" placeholder="Name">
   </div>
 </script>
 
 <script type="text/x-red" data-help-name="counter">
-  <p></p>
+  <p>A simple counter node</p>
+  <p>This node increments/decrements a counter based on the payload of the
+  input message. True increments, False decrements.</p>
+  <p>The ammount the value changed is set by the increment field</p>
+  <p>The counter can be reset to 0 by sending a message with the <i>Reset Topic</i><p>
+  <p>A fixed preset value can also be configured, this is enabled/disbaled by sending 
+  a boolean payload on the <i>Preset Topic</i>.</p>
 </script>
 
 <script type="text/javascript">
@@ -49,7 +51,6 @@
       preset: {value: 0, validate:RED.validators.number()},
       presetTopic: {value: 'preset/1', required: true},
       resetTopic: {value: 'reset/1', required: true},
-      topic: {},
       name: {}
     },
     inputs: 1,
