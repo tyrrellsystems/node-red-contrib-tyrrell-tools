@@ -28,9 +28,9 @@ module.exports = function(RED) {
     var node = this;
 
     node.on('input', function(msg){
-      if (msg.hasOwnProperty('topic') && msg.topic = 'setOn') {
+      if (msg.hasOwnProperty('topic') && msg.topic == 'setOn') {
         node.onPayload = msg.payload;
-      } else if (msg.hasOwnProperty('topic') && msg.topic = 'setOff') {
+      } else if (msg.hasOwnProperty('topic') && msg.topic == 'setOff') {
         node.offPayload = msg.payload;
       } else {
         if (typeof msg.payload == 'boolean' || typeof msg.payload == 'number'){
