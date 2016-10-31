@@ -28,13 +28,19 @@ module.exports = function(RED) {
     var node = this;
 
     node.on('input', function(msg){
-      if (typeof msg.payload == 'boolean' || typeof msg.payload == 'number'){
-        if (msg.payload) {
-          msg.payload = node.onPayload;
-        } else {
-          msg.payload = node.offPayload;
+      if (msg.hasOwnProperty('topic') && msg.topic = 'setOn') {
+        node.onPayload = msg.payload;
+      } else if (msg.hasOwnProperty('topic') && msg.topic = 'setOff') {
+        node.offPayload = msg.payload;
+      } else {
+        if (typeof msg.payload == 'boolean' || typeof msg.payload == 'number'){
+          if (msg.payload) {
+            msg.payload = node.onPayload;
+          } else {
+            msg.payload = node.offPayload;
+          }
+          node.send(msg);
         }
-        node.send(msg);
       }
     });
   }
