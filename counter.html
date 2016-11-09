@@ -12,6 +12,10 @@
 -->
 <script type="text/x-red" data-template-name="counter">
   <div class="form-row">
+    <label for="node-input-start"><i class="fa fa-tasks"></i> Start Value</label>
+    <input type="number" id="node-input-start">
+  </div>
+  <div class="form-row">
     <label for="node-input-increment"><i class="fa fa-tasks"></i> Increment</label>
     <input type="number" id="node-input-increment">
   </div>
@@ -47,6 +51,7 @@
   RED.nodes.registerType('counter',{
     category: 'tools',
     defaults: {
+      start: {value: 0, validate:RED.validators.number()},
       increment: {value: 1, validate:RED.validators.number()},
       preset: {value: 0, validate:RED.validators.number()},
       presetTopic: {value: 'preset/1', required: true},

@@ -19,13 +19,14 @@ module.exports = function(RED) {
 
   function counter(n) {
   	RED.nodes.createNode(this, n);
-  	this.increment = parseInt(n.increment);
+    this.start = parseFloat(n.start);
+  	this.increment = parseFloat(n.increment);
   	this.name = n.name;
-    this.presetValue = parseInt(n.preset);
+    this.presetValue = parseFloat(n.preset);
     this.presetTopic = n.presetTopic;
     this.resetTopic = n.resetTopic;
   	this.topic = n.topic;
-  	this.value = 0;
+  	this.value = this.start;
 
     this.preset = false;
 
@@ -33,10 +34,10 @@ module.exports = function(RED) {
 
   	this.on('input', function(msg) {
       if (msg.hasOwnProperty('topic') && msg.topic === node.resetTopic) {
-        node.value = 0;
+        node.value = node.start;
         node.send({
           topic:msg.topic,
-          payload: 0
+          payload: node.value
         });
       } else if (msg.hasOwnProperty('topic') && msg.topic === node.presetTopic) {
         if (msg.hasOwnProperty('payload') && (typeof msg.payload === 'boolean' || typeof msg.payload === 'number')) {
