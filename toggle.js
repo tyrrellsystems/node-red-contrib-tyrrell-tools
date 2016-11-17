@@ -35,9 +35,9 @@ module.exports = function(RED) {
       } else {
         if (typeof msg.payload == 'boolean' || typeof msg.payload == 'number'){
           if (msg.payload) {
-            msg.payload = node.onPayload;
+            msg.payload = RED.util.evaluateNodeProperty(node.onPayload, node.onType, node,msg);
           } else {
-            msg.payload = node.offPayload;
+            msg.payload = RED.util.evaluateNodeProperty(node.offPayload, node.offType, node,msg);
           }
           node.send(msg);
         }
