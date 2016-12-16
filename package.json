@@ -1,10 +1,17 @@
 {
   "name": "node-red-contrib-tyrrell-tools",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "main": "toggle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tyrrellsystems/node-red-contrib-tyrrell-tools"
+  },
+  "bugs" : {
+    "url": "https://github.com/tyrrellsystems/node-red-contrib-tyrrell-tools/issues"
   },
   "node-red": {
   	"nodes": {
